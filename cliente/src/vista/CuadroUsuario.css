@@ -1,0 +1,6 @@
+.cuadro_usuario{
+    display: flex;
+    position: fixed;
+    height: 95%;
+    width: 95%;
+}

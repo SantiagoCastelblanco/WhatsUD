@@ -1,20 +1,24 @@
 import './App.css';
-import BarraLateral from './BarraLateral';
+import Login from './Login'
+import CuadroUsuario from './CuadroUsuario';
+import { useState } from 'react';
 
 function App() {
+  const[numUsr,setNumUsr] = useState()
+  const[password,setPassword] = useState()
+
   return (
     <div>
       <div className='app'>
-
         <div className='app_body'> 
+          {/**
+           * Inicio de sesion
+           */}
+           
 
-          {/*BARRA LATERAL
-          
-          */}
-          <BarraLateral> </BarraLateral>
-
-          {/*CHAT*/}
-          
+           <Login numberInpt = {setNumUsr} pass = {setPassword}>
+            
+           </Login> 
         </div>
       </div>
     </div>
