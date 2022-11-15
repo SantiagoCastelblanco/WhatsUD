@@ -1,0 +1,17 @@
+.app{
+  background-color: #97CEFF;
+  display: grid;
+  place-items: center;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+}
+
+.app_body{
+  background-color: #EAD4CE;
+  position: fixed;
+  margin-top: -50px;
+  height: 97%;
+  width: 95%;
+  box-shadow: -5px 4px 22px -12px rgba(0, 0, 0, 0.2);
+}
