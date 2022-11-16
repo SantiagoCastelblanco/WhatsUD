@@ -16,7 +16,8 @@ function App() {
            * Inicio de sesion
            */}
            
-           <Login numberInpt = {setNumUsr} pass = {setPassword}> </Login> 
+           {/* <Login numberInpt = {setNumUsr} pass = {setPassword}> </Login>  */}
+           <CuadroUsuario numeroTelefono={55555555} ></CuadroUsuario>
         </div>
       </div>
     </div>
