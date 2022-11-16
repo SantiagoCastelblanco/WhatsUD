@@ -1,6 +1,7 @@
 import './App.css';
 import Login from './Login'
 import CuadroUsuario from './CuadroUsuario';
+import {Routes, Route, BrowserRouter} from 'react-router-dom'
 
 import { useState } from 'react';
 
@@ -12,12 +13,12 @@ function App() {
     <div>
       <div className='app'>
         <div className='app_body'> 
-          {/**
-           * Inicio de sesion
-           */}
-           
-           {/* <Login numberInpt = {setNumUsr} pass = {setPassword}> </Login>  */}
-           <CuadroUsuario numeroTelefono={55555555} ></CuadroUsuario>
+          <BrowserRouter>
+            <Routes>
+              <Route path='/' element={<Login numberInpt={setNumUsr} pass={setPassword}/>}/>
+              <Route path='/usuario' element={<CuadroUsuario numeroTelefono={numUsr} pass={password}/>}/>
+            </Routes>
+          </BrowserRouter>
         </div>
       </div>
     </div>

@@ -12,8 +12,6 @@ function BarraLateral({ numeroTelefono }) {
     setEntradaBusqueda(e.target.value)
   }
 
-  const types = ["Conversacionjes", "Contactos"]
-
   return (
     <div className='barra_lateral'>
 
