@@ -3,15 +3,13 @@ import BarraLateral from './BarraLateral'
 import Chat from './Chat'
 import './CuadroUsuario.css'
 
-function CuadroUsuario() {
+function CuadroUsuario({numeroTelefono}) {
   return (
     <div className='cuadro_usuario'>
         {/*BARRA LATERAL
           
         */}
-        <BarraLateral>
-
-        </BarraLateral>
+        <BarraLateral numeroTelefono={numeroTelefono} />
 
         {/*CHAT*/}
         <Chat>
