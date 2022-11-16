@@ -1,6 +1,7 @@
 import './App.css';
 import Login from './Login'
 import CuadroUsuario from './CuadroUsuario';
+
 import { useState } from 'react';
 
 function App() {
@@ -15,10 +16,7 @@ function App() {
            * Inicio de sesion
            */}
            
-
-           <Login numberInpt = {setNumUsr} pass = {setPassword}>
-            
-           </Login> 
+           <Login numberInpt = {setNumUsr} pass = {setPassword}> </Login> 
         </div>
       </div>
     </div>
