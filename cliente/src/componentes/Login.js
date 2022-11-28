@@ -33,6 +33,7 @@ function Login({numberInpt,pass}) {
       </form>
     </div>
   )
+  
 }
 
 export default Login

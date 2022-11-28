@@ -1,19 +1,31 @@
 import React, { useState, useEffect } from 'react'
+import {Tab, Nav, Button, Modal } from 'react-bootstrap'
+import Conversaciones from './BLConversaciones'
+import Contactos from './BLContactos'
+import NuevaConversacionModal from './NuevaConversacionModal'
+import NuevoContactoModal from './NuevoContactoModal'
+
 import './BarraLateral.css'
 
+const NOMBRE_CONVERSACIONES = 'chats'
+const NOMBRE_CONTACTOS = 'contactos'
 
 function BarraLateral({ numeroTelefono }) {
   const [entradaBusqueda, setEntradaBusqueda] = useState()
-  const [contactos, setContactos] = useState([])
-  const [contactosFiltrados, setContactosFiltrados] = useState([])
-  const [contactoSeleccionado, setContactoSeleccionado] = useState()
+  const [menuActivo, setMenuActivo] = useState(NOMBRE_CONVERSACIONES)
+  const [modalAbierto, setModalAbierto] = useState(false)
+  const conversacionActiva = menuActivo === NOMBRE_CONVERSACIONES
 
   const manejoBusqueda = (e) => {
     setEntradaBusqueda(e.target.value)
   }
+  
+  function cerrarModal(){
+    setModalAbierto(false)
+  }
 
   return (
-    <div className='barra_lateral'>
+    <div className='barra-lateral'>
 
       {/* Encabezado, conteniendo informacion relacionada al usuario actual
         su numero de telefono y demas*/ }
@@ -30,19 +42,38 @@ function BarraLateral({ numeroTelefono }) {
           onChange={manejoBusqueda} />
       </div>
 
-      {/**Encargado de los botones de seleccion de contactos y chat */}
-      <div className='barra_lateral_botones'>
+      {/** Contenedor de los chats y contactos*/}
+      <div className='d-flex flex-column'>
+        <Tab.Container activeKey={menuActivo} onSelect={setMenuActivo}>
+          <Nav variant = "tabs" className="justify-content-center">
+            <Nav.Item>
+              <Nav.Link eventKey={NOMBRE_CONVERSACIONES}>Conversaciones</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey={NOMBRE_CONTACTOS}>Contactos</Nav.Link>
+            </Nav.Item>
+          </Nav>
+          <Tab.Content>
+            <Tab.Pane eventKey={NOMBRE_CONVERSACIONES}>
+              <Conversaciones />
+            </Tab.Pane>
+            <Tab.Pane eventKey={NOMBRE_CONTACTOS}>
+              <Contactos />
+            </Tab.Pane>
+
+            <Button onClick={() => setModalAbierto(true)} className="rounded-0">
+              Nuevo {conversacionActiva ? 'Chat' : 'Contacto'}
+            </Button>
+          </Tab.Content>
+        </Tab.Container>
+        <Modal show={modalAbierto} onHide={cerrarModal}>
+        {conversacionActiva ? 
+          <NuevaConversacionModal cerrarModal={cerrarModal} />:
+          <NuevoContactoModal cerrarModal={cerrarModal} />
+        }
+      </Modal>
       </div>
-
-      {/**Encargado de mantener todos los chats organizados */}
-      <div className='barra_lateral_chats'>
-
-      </div>
-
-      {/**Encargado de mantenenr los contactos organizados */}
-      <div className='barra_lateral_contactos'>
-
-      </div>
+      
 
     </div>
   )
