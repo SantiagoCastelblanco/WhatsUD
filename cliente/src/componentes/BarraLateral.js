@@ -25,7 +25,7 @@ function BarraLateral({ numeroTelefono }) {
   }
 
   return (
-    <div className='barra-lateral'>
+    <div className='barra_lateral'>
 
       {/* Encabezado, conteniendo informacion relacionada al usuario actual
         su numero de telefono y demas*/ }

@@ -9,8 +9,8 @@ import { ProveedorSocket } from '../contextos/ProveedorSocket';
 import useLocalStorage from '../enlaces/LocalStorageManager'
 
 function App() {
-  const[numUsr,setNumUsr] = useLocalStorage('numUsr')
-  const[password,setPassword] = useLocalStorage('password')
+  const[numUsr,setNumUsr] = useState('')
+  const[password,setPassword] = useState('')
 
   const cuadroUsuario = (
     <ProveedorSocket id={numUsr}>
@@ -29,7 +29,7 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route path='/' element={<Login numberInpt={setNumUsr} pass={setPassword}/>}/>
-              <Route path='/usuario' element={cuadroUsuario}/>
+              <Route path='/usuario' element={cuadroUsuario} />
             </Routes>
           </BrowserRouter>
         </div>
