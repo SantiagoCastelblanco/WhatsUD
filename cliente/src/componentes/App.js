@@ -1,12 +1,12 @@
 import './App.css';
-import React from 'react'
+import React,{ useState } from 'react'
 import Login from './Login'
 import CuadroUsuario from './CuadroUsuario';
 import {Routes, Route, BrowserRouter} from 'react-router-dom'
 import { ProveedorContactos } from '../contextos/ProveedorContactos';
 import { ProveedorConversaciones } from '../contextos/ProveedorConversaciones';
-import { useState } from 'react';
 import { ProveedorSocket } from '../contextos/ProveedorSocket';
+import useLocalStorage from '../enlaces/LocalStorageManager'
 
 function App() {
   const[numUsr,setNumUsr] = useLocalStorage('numUsr')
