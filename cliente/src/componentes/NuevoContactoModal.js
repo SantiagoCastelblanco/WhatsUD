@@ -3,7 +3,7 @@ import { useContactos } from '../contextos/ProveedorContactos'
 import { Form, Modal,Button } from 'react-bootstrap'
 
 
-export default function NuevoContactoModal({closeModal}) {
+export default function NuevoContactoModal({cerrarModal}) {
   const nombreRef = useRef()
   const numRef = useRef()
   const {crearContacto} = useContactos()
@@ -13,7 +13,7 @@ export default function NuevoContactoModal({closeModal}) {
     console.log(nombreRef.current.value)
     console.log(numRef.current.value)
     crearContacto(numRef.current.value, nombreRef.current.value)
-    closeModal()
+    cerrarModal()
   }
 
   return (
@@ -32,7 +32,6 @@ export default function NuevoContactoModal({closeModal}) {
           <Button type='submit'>Crear</Button>
         </Form>
       </Modal.Body>
-
     </>
   )
 }

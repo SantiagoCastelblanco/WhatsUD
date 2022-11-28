@@ -3,8 +3,8 @@ import { Modal, Form, Button } from 'react-bootstrap'
 import { useContactos } from '../contextos/ProveedorContactos'
 import { useConversaciones } from '../contextos/ProveedorConversaciones'
 
-export default function NuevaConversacionModal({closeModal}) {
-  const [contactoSeleccionadoID, setContactoSeleccionadoID] = useState()
+export default function NuevaConversacionModal({cerrarModal}) {
+  const [contactoSeleccionadoID, setContactoSeleccionadoID] = useState([])
   const { contactos } = useContactos()
   const { crearConversacion } = useConversaciones()
 
@@ -12,7 +12,7 @@ export default function NuevaConversacionModal({closeModal}) {
     e.preventDefault()
 
     crearConversacion(contactoSeleccionadoID)
-    closeModal()
+    cerrarModal()
   }
 
   function manejarCambioEnCheckBox(id) {
@@ -36,9 +36,9 @@ export default function NuevaConversacionModal({closeModal}) {
             <Form.Group controlId={contacto.id} key={contacto.id}>
               <Form.Check
                 type='checkbox'
-                value={contacto.id}
+                value={contactoSeleccionadoID.includes(contacto.id)}
                 label={contacto.nombre}
-                ref={contacto.id}
+                onChange={() => manejarCambioEnCheckBox(contacto.id)}
               />
             </Form.Group>
           ))}
