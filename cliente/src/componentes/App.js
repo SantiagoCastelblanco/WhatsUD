@@ -9,7 +9,7 @@ import { ProveedorSocket } from '../contextos/ProveedorSocket';
 import useLocalStorage from '../enlaces/LocalStorageManager'
 
 function App() {
-  const[numUsr,setNumUsr] = useState('')
+  const[numUsr,setNumUsr] = useLocalStorage('id')
   const[password,setPassword] = useState('')
 
   const cuadroUsuario = (

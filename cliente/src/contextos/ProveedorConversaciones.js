@@ -23,11 +23,11 @@ export function ProveedorConversaciones({ id, children }) {
 
   const agregarMensaje = useCallback(({ recipientes, texto, autor }) => {
     setConversaciones(prevConversaciones => {
-      let madeChange = false
-      const mensajeNuevo = { recipientes, texto, autor }
+      let hayCambio = false
+      const mensajeNuevo = { autor, texto }
       const conversacionNueva = prevConversaciones.map(conversacion => {
         if (igualdadArreglos(conversacion.recipientes, recipientes)) {
-          madeChange = true
+          hayCambio = true
           return {
             ...conversacion,
             mensajes: [...conversacion.mensajes, mensajeNuevo]
@@ -35,7 +35,7 @@ export function ProveedorConversaciones({ id, children }) {
         }
         return conversacion
       })
-      if (madeChange) {
+      if (hayCambio) {
         return conversacionNueva
       } else {
         return [...prevConversaciones, { recipientes, mensajes: [mensajeNuevo] }]
@@ -68,10 +68,10 @@ export function ProveedorConversaciones({ id, children }) {
       })
       const nombre = (contacto && contacto.nombre) || mensaje.autor
       const fromMe = id === mensaje.autor
-      return { ...mensaje, nombre, fromMe }
+      return { ...mensaje, nombreAutor: nombre, fromMe }
     })
-    const selected = index === indexConversacionSeleccionada
-    return { ...conversacion, recipientes, mensajes, selected }
+    const seleccionado = index === indexConversacionSeleccionada
+    return { ...conversacion, mensajes, recipientes, seleccionado }
   })
 
   const valor = {

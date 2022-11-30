@@ -3,7 +3,7 @@ import { Form, InputGroup, Button } from 'react-bootstrap'
 import { useConversaciones } from '../contextos/ProveedorConversaciones'
 
 export default function Chat() {
-  const [texto, setTexto] = React.useState('')
+  const [texto, setTexto] = useState('')
   const setRef = useCallback(node => {
     if (node) {
       node.scrollIntoView({ smooth: true })
@@ -28,8 +28,7 @@ export default function Chat() {
           {conversacionSeleccionada.mensajes.map((mensaje, index) => {
             const ultimoMensaje = conversacionSeleccionada.mensajes.length - 1 === index
             return (
-              <div ref={ultimoMensaje ?
-                setRef : null}
+              <div ref={ultimoMensaje ?setRef : null}
                 key={index}
                 className={`my-1 d-flex flex-column ${mensaje.fromMe ? 'align-self-end align-items-end' : 'align-items-start'}`}>
                 <div className={`rounded px-2 py-1 ${mensaje.fromMe ? 'bg-primary text-white' : 'border'}`}>
@@ -45,7 +44,7 @@ export default function Chat() {
       </div>
       <Form onSubmit={manejarEntrada}>
         <Form.Group className='m-2'>
-          <InputGroup>
+        <InputGroup>
             <Form.Control
               as='textarea'
               required

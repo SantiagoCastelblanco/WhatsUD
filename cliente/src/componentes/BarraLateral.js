@@ -31,7 +31,7 @@ function BarraLateral({ numeroTelefono }) {
         su numero de telefono y demas*/ }
       <div className='barra_lateral_encabezado'>
         <h3>Nombre de usuario</h3>
-        <p>Numero de telefono: {numeroTelefono}</p>
+        <p>Numero de telefono: {numeroTelefono.numUsr}</p>
 
       </div>
 
@@ -60,7 +60,6 @@ function BarraLateral({ numeroTelefono }) {
             <Tab.Pane eventKey={NOMBRE_CONTACTOS}>
               <Contactos />
             </Tab.Pane>
-
             <Button onClick={() => setModalAbierto(true)} className="rounded-0">
               Nuevo {conversacionActiva ? 'Chat' : 'Contacto'}
             </Button>
