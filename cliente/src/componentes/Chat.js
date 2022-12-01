@@ -15,7 +15,7 @@ export default function Chat() {
     e.preventDefault()
 
     enviarMensaje(
-      conversacionSeleccionada.recipients.map(recipient => recipient.id),
+      conversacionSeleccionada.recipientes.map(recipient => recipient.id),
         texto
     )
     setTexto('')
@@ -28,14 +28,14 @@ export default function Chat() {
           {conversacionSeleccionada.mensajes.map((mensaje, index) => {
             const ultimoMensaje = conversacionSeleccionada.mensajes.length - 1 === index
             return (
-              <div ref={ultimoMensaje ?setRef : null}
+              <div ref={ultimoMensaje ? setRef : null}
                 key={index}
-                className={`my-1 d-flex flex-column ${mensaje.fromMe ? 'align-self-end align-items-end' : 'align-items-start'}`}>
-                <div className={`rounded px-2 py-1 ${mensaje.fromMe ? 'bg-primary text-white' : 'border'}`}>
-                  {mensaje.text}
+                className={`my-1 d-flex flex-column ${mensaje.mensajeUsuario ? 'align-self-end align-items-end' : 'align-items-start'}`}>
+                <div className={`rounded px-2 py-1 ${mensaje.mensajeUsuario ? 'bg-primary text-white' : 'border'}`}>
+                  {mensaje.texto}
                 </div>
-                <div className={`text-muted small ${mensaje.fromMe ? 'text-right' : ''}`}>
-                  {mensaje.fromMe ? 'Tú' : mensaje.senderName}
+                <div className={`text-muted small ${mensaje.mensajeUsuario ? 'text-right' : ''}`}>
+                  {mensaje.mensajeUsuario ? 'Tú' : "caca"}
                 </div>
               </div>
             )
@@ -44,17 +44,13 @@ export default function Chat() {
       </div>
       <Form onSubmit={manejarEntrada}>
         <Form.Group className='m-2'>
-        <InputGroup>
-            <Form.Control
-              as='textarea'
-              required
+          <InputGroup>
+            <Form.Control as='textarea' required
               value={texto}
               onChange={e => setTexto(e.target.value)}
               style={{ height: '75px', resize: 'none' }}
             />
-            <InputGroup.Append>
-              <Button type='submit'>Enviar</Button>
-            </InputGroup.Append>
+            <button className="btn btn-outline-secondary" type="submit">Enviar</button>
           </InputGroup>
         </Form.Group>
       </Form>

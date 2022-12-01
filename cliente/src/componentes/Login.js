@@ -10,8 +10,7 @@ function Login({ numberInpt, pass }) {
     numberInpt(numeroEntrada.current.value)
     pass(contra.current.value)
     console.log(numeroEntrada.current.value)
-    console.log(contra.current.value)
-    
+    console.log(contra.current.value)  
   }
 
   return (

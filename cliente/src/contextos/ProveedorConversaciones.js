@@ -51,7 +51,7 @@ export function ProveedorConversaciones({ id, children }) {
 
   function enviarMensaje(recipientes, texto) {
     socket.emit('enviar-mensaje', { recipientes, texto })
-    agregarMensaje({ recipientes, texto, autor: id })
+    agregarMensaje({ recipientes, texto, autor: id.numUsr })
   }
 
   const conversacionFormateada = conversaciones.map((conversacion, index) => {
@@ -67,8 +67,8 @@ export function ProveedorConversaciones({ id, children }) {
         return contacto.id === mensaje.autor
       })
       const nombre = (contacto && contacto.nombre) || mensaje.autor
-      const fromMe = id === mensaje.autor
-      return { ...mensaje, nombreAutor: nombre, fromMe }
+      const mensajeUsuario = id.numUsr === mensaje.autor
+      return { ...mensaje, nombreAutor: nombre, mensajeUsuario }
     })
     const seleccionado = index === indexConversacionSeleccionada
     return { ...conversacion, mensajes, recipientes, seleccionado }
@@ -78,7 +78,7 @@ export function ProveedorConversaciones({ id, children }) {
     conversaciones: conversacionFormateada,
     conversacionSeleccionada: conversacionFormateada[indexConversacionSeleccionada],
     enviarMensaje,
-    seleccionarConversacionIndex: setIndexConversacionSeleccionada,
+    seleccionarIndexConversacion: setIndexConversacionSeleccionada,
     crearConversacion
   }
 

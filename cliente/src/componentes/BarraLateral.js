@@ -10,7 +10,7 @@ import './BarraLateral.css'
 const NOMBRE_CONVERSACIONES = 'chats'
 const NOMBRE_CONTACTOS = 'contactos'
 
-function BarraLateral({ numeroTelefono }) {
+function BarraLateral({ numUsr }) {
   const [entradaBusqueda, setEntradaBusqueda] = useState()
   const [menuActivo, setMenuActivo] = useState(NOMBRE_CONVERSACIONES)
   const [modalAbierto, setModalAbierto] = useState(false)
@@ -31,7 +31,7 @@ function BarraLateral({ numeroTelefono }) {
         su numero de telefono y demas*/ }
       <div className='barra_lateral_encabezado'>
         <h3>Nombre de usuario</h3>
-        <p>Numero de telefono: {numeroTelefono.numUsr}</p>
+        <p>Numero de telefono: {numUsr}</p>
 
       </div>
 
