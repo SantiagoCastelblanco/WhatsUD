@@ -4,15 +4,12 @@ import Chat from './Chat'
 import './CuadroUsuario.css'
 import { useConversaciones } from '../contextos/ProveedorConversaciones'
 
-function CuadroUsuario({numeroTelefono}) {
+function CuadroUsuario({numUsr}) {
   const {conversacionSeleccionada} = useConversaciones()
   return (
     <div className='cuadro_usuario'>
-        {/*BARRA LATERAL
-          
-        */}
-        <BarraLateral numeroTelefono={numeroTelefono} />
-
+        {/*BARRA LATERAL*/}
+        <BarraLateral numUsr={numUsr} />
         {/*CHAT*/}
         {conversacionSeleccionada && <Chat />}
     </div>
