@@ -7,6 +7,10 @@ export function useSocket(){
     return useContext(ContextoSocket)
 }
 
+export function marcarMensajeComoLeido(socket, idMensaje){
+    socket.emit('marcar-mensaje-como-leido', idMensaje)
+}
+
 export function ProveedorSocket({ id, children }) {
     const [socket, setSocket] = React.useState()
 

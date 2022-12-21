@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, useCallback } from 'react'
 import useLocalStorage from '../enlaces/LocalStorageManager'
-import { useSocket } from './ProveedorSocket'
+import { useSocket, marcarMensajeComoLeido } from './ProveedorSocket'
 import { useContactos } from './ProveedorContactos'
 
 const ContextoConversaciones = React.createContext()
@@ -24,11 +24,12 @@ export function ProveedorConversaciones({ id, children }) {
   const agregarMensaje = useCallback(({ recipientes, texto, autor }) => {
     setConversaciones(prevConversaciones => {
       let hayCambio = false
-      const mensajeNuevo = { autor, texto }
+      const mensajeNuevo = { autor, texto, leidoPor: [autor] }
       const conversacionNueva = prevConversaciones.map(conversacion => {
         if (igualdadArreglos(conversacion.recipientes, recipientes)) {
           hayCambio = true
           return {
+
             ...conversacion,
             mensajes: [...conversacion.mensajes, mensajeNuevo]
           }
@@ -46,12 +47,30 @@ export function ProveedorConversaciones({ id, children }) {
   useEffect(() => {
     if (socket == null) return
     socket.on('recibir-mensaje', agregarMensaje)
+    console.log('socket.on recibiendo mensaje')
     return () => socket.off('recibir-mensaje')
   }, [socket, agregarMensaje])
 
   function enviarMensaje(recipientes, texto) {
     socket.emit('enviar-mensaje', { recipientes, texto })
-    agregarMensaje({ recipientes, texto, autor: id.numUsr })
+    agregarMensaje({ recipientes, texto, autor: id })
+  }
+
+  function marcarMensajeComoLeido(idMensaje) {
+    setConversaciones(prevConversaciones => {
+      return prevConversaciones.map(conversacion => {
+        return {
+          ...conversacion,
+          mensajes: conversacion.mensajes.map(mensaje => {
+            if (mensaje.id === idMensaje) {
+              return { ...mensaje, leidoPor: [...mensaje.leidoPor, id.numUsr] }
+            }
+            return mensaje
+          })
+        }
+      })
+    })
+    socket.emit('marcar-mensaje-como-leido', idMensaje)
   }
 
   const conversacionFormateada = conversaciones.map((conversacion, index) => {
@@ -67,7 +86,7 @@ export function ProveedorConversaciones({ id, children }) {
         return contacto.id === mensaje.autor
       })
       const nombre = (contacto && contacto.nombre) || mensaje.autor
-      const mensajeUsuario = id.numUsr === mensaje.autor
+      const mensajeUsuario = id === mensaje.autor
       return { ...mensaje, nombreAutor: nombre, mensajeUsuario }
     })
     const seleccionado = index === indexConversacionSeleccionada

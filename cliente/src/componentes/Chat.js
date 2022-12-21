@@ -35,7 +35,7 @@ export default function Chat() {
                   {mensaje.texto}
                 </div>
                 <div className={`text-muted small ${mensaje.mensajeUsuario ? 'text-right' : ''}`}>
-                  {mensaje.mensajeUsuario ? 'Tú' : "caca"}
+                  {mensaje.mensajeUsuario ? 'Tú' : mensaje.nombreAutor}
                 </div>
               </div>
             )
