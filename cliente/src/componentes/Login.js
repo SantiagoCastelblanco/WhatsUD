@@ -1,17 +1,21 @@
 import React, { useRef } from 'react'
+import {useNavigate} from 'react-router-dom'
 import './Login.css'
 
 function Login({ numberInpt, pass }) {
   const numeroEntrada = useRef()
   const contra = useRef()
+  const navigate = useNavigate()
 
   function manejarEntrada(e) {
     e.preventDefault()
     numberInpt(numeroEntrada.current.value)
     pass(contra.current.value)
+
     
     console.log(numeroEntrada.current.value)
     console.log(contra.current.value)  
+    navigate('/usuario')
   }
 
   return (

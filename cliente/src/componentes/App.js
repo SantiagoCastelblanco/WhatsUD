@@ -14,7 +14,7 @@ function App() {
 
   const cuadroUsuario = (
     <ProveedorSocket id={numUsr}>
-      <ProveedorContactos>
+      <ProveedorContactos id = {numUsr}>
         <ProveedorConversaciones id={numUsr}>
           <CuadroUsuario numUsr={numUsr} pass={password} />
         </ProveedorConversaciones>

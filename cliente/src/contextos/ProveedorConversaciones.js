@@ -47,12 +47,31 @@ export function ProveedorConversaciones({ id, children }) {
   useEffect(() => {
     if (socket == null) return
     socket.on('recibir-mensaje', agregarMensaje)
-    console.log('socket.on recibiendo mensaje')
     return () => socket.off('recibir-mensaje')
   }, [socket, agregarMensaje])
 
+  useEffect(() => {
+    if(socket == null) return
+    socket.on('recibir-mensajes',(id, mensajes )=> {
+      console.log(mensajes)
+      const conversacionesNuevas = []
+      const recipientes = []
+      mensajes.forEach(mensaje => {
+      })
+      setConversaciones(conversacionesNuevas)
+    })
+  }, [socket])
+
+
+  useEffect(() => {
+    if (socket) {
+      socket.emit('obtener-mensajes-base-datos')
+    }
+  }, [socket])
+
+
   function enviarMensaje(recipientes, texto) {
-    socket.emit('enviar-mensaje', { recipientes, texto })
+    socket.emit('enviar-mensaje', {recipientes, texto })
     agregarMensaje({ recipientes, texto, autor: id })
   }
 
