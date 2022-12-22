@@ -8,7 +8,7 @@ export default function BLContactos() {
     <ListGroup variant='flush'>
       {contactos.map(contacto => (
         <ListGroup.Item key={contacto.id}>
-          {contacto.nombre}
+          {contacto.nombre} ({contacto.id})
         </ListGroup.Item>
       ))}
     </ListGroup>
