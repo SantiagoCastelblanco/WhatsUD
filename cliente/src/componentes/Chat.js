@@ -31,7 +31,7 @@ export default function Chat() {
               <div ref={ultimoMensaje ? setRef : null}
                 key={index}
                 className={`my-1 d-flex flex-column ${mensaje.mensajeUsuario ? 'align-self-end align-items-end' : 'align-items-start'}`}>
-                <div className={`rounded px-2 py-1 ${mensaje.mensajeUsuario ? 'bg-primary text-white' : 'border'}`}>
+                <div className={`rounded px-2 py-1 ${mensaje.mensajeUsuario ? 'bg-primary text-white' : 'border bg-white'}`}>
                   {mensaje.texto}
                 </div>
                 <div className={`text-muted small ${mensaje.mensajeUsuario ? 'text-right' : ''}`}>

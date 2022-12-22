@@ -52,20 +52,34 @@ export function ProveedorConversaciones({ id, children }) {
 
   useEffect(() => {
     if(socket == null) return
-    socket.on('recibir-mensajes',(id, mensajes )=> {
-      console.log(mensajes)
+    console.log('recibiendo mensajes')
+    socket.on('recibir-mensajes',(mensajes )=> {
       const conversacionesNuevas = []
-      const recipientes = []
-      mensajes.forEach(mensaje => {
+      let conversacionesLlegada = JSON.parse(mensajes)
+      conversacionesLlegada.forEach(conversacion => {
+        console.log(conversacion)
+        const recipientes  = conversacion.recipientes
+        let mensajesConversacion = JSON.parse(conversacion.mensajes)  
+        mensajesConversacion.forEach(mensaje => {
+          const indexConversacionExistente = conversacionesNuevas.findIndex(conversacion => {
+            return igualdadArreglos(conversacion.recipientes, recipientes)
+          })
+          if(indexConversacionExistente>=0){
+            conversacionesNuevas[indexConversacionExistente].mensajes.push({autor:mensaje.autor, texto:mensaje.texto, fecha:mensaje.fecha})
+          }else{
+            conversacionesNuevas.push({recipientes, mensajes:[{autor:mensaje.autor, texto:mensaje.texto, fecha:mensaje.fecha}]})
+          }
+        })
       })
       setConversaciones(conversacionesNuevas)
     })
-  }, [socket])
+  }, [socket, setConversaciones])
 
 
   useEffect(() => {
     if (socket) {
-      socket.emit('obtener-mensajes-base-datos')
+      console.log('obteniendo mensajes')
+      socket.emit('obtener-mensajes', id)
     }
   }, [socket])
 

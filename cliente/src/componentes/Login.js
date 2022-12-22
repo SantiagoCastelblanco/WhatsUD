@@ -1,5 +1,6 @@
 import React, { useRef } from 'react'
 import {useNavigate} from 'react-router-dom'
+import { newNumber } from '../enlaces/LocalStorageManager'
 import './Login.css'
 
 function Login({ numberInpt, pass }) {
@@ -11,8 +12,7 @@ function Login({ numberInpt, pass }) {
     e.preventDefault()
     numberInpt(numeroEntrada.current.value)
     pass(contra.current.value)
-
-    
+    newNumber()
     console.log(numeroEntrada.current.value)
     console.log(contra.current.value)  
     navigate('/usuario')
@@ -40,11 +40,11 @@ function Login({ numberInpt, pass }) {
       </div>
 
       <div id="derecho">
-        <div class="titulo">
+        <div className="titulo">
           Bienvenido
         </div>
         <hr></hr>
-        <div class="pie-form">
+        <div className="pie-form">
           <a href="#">¿Perdiste tu contraseña?</a>
           <a href="#">¿No tienes Cuenta? Registrate</a>
           <hr></hr>

@@ -22,7 +22,7 @@ io.on("connection", socket => {
                 recipientes: nuevosRecipientes, autor: id, texto
             })
         })
-        const participantes = [...recipientes, id]
+        const participantes = [...recipientes, id].sort()
         mensajesDB.all('SELECT * FROM mensajes WHERE participantes = ?', [participantes], (error, mensajes) => {
             if (error) {
                 console.log(error)
@@ -33,7 +33,7 @@ io.on("connection", socket => {
                     const mensaje = { autor: id, texto, fecha: new Date() }
                     const nuevosMensajes = JSON.parse(mensajes[0].mensajes)
                     nuevosMensajes.push(mensaje)
-                    mensajesDB.run('UPDATE mensajes SET mensajes = ? WHERE conversation_id = ?', [JSON.stringify([nuevosMensajes]), conversationId], function (error) {
+                    mensajesDB.run('UPDATE mensajes SET mensajes = ? WHERE conversation_id = ?', [JSON.stringify(nuevosMensajes), conversationId], function (error) {
                         if (error) {
                             console.log(error)
                         } else {
@@ -66,7 +66,15 @@ io.on("connection", socket => {
             } else {
                 if (mensajes === undefined || mensajes.length == 0) return
                 console.log('Mensajes enviados de base de datos a ', userID)
-                socket.emit('recibir-mensajes', mensajes)
+                const conversaciones = mensajes.map(mensaje => {
+                    const recipientes = mensaje.participantes.split(',')
+                    recipientes.splice(recipientes.indexOf(userID), 1)
+                     // Remove current user from recipients
+                    const mensajes = mensaje.mensajes
+                    return { recipientes, mensajes}
+                })
+
+                socket.emit('recibir-mensajes', JSON.stringify(conversaciones))
             }
         })
     })
@@ -74,13 +82,31 @@ io.on("connection", socket => {
     socket.on('guardar-contactos', ({ contactos, numUsr }) => {
         console.log('Guardando contactos de ', numUsr)
         const contactosString = JSON.stringify(contactos)
-        contactsDB.run('INSERT INTO contactos (id, nombreContactos) VALUES (?, ?)', [numUsr, contactosString], error => {
+        contactsDB.all('SELECT * FROM contactos WHERE id = ?', numUsr, (error, contactos) => {
             if (error) {
                 console.log(error)
             } else {
-                console.log('Contactos guardados en la base de datos')
+                if (contactos.length > 0) {
+                    // Update existing contact list
+                    contactsDB.run('UPDATE contactos SET nombreContactos = ? WHERE id = ?', [contactosString, numUsr], error => {
+                        if (error) {
+                            console.log(error)
+                        } else {
+                            console.log('Contactos guardados en la base de datos')
+                        }
+                    })
+                } else {
+                    // Create new contact list
+                    contactsDB.run('INSERT INTO contactos (id, nombreContactos) VALUES (?, ?)', [numUsr, contactosString], error => {
+                        if (error) {
+                            console.log(error)
+                        } else {
+                            console.log('Contactos guardados en la base de datos')
+                        }
+                    })
+                }
             }
-        })
+        }) 
     })
 
     socket.on('obtener-contactos', numUsr => {
